@@ -1,56 +1,60 @@
 # Wispr Flow Clone
 
-A local, privacy-focused voice dictation tool acting as a clone of "Wispr Flow". It records audio upon a global hotkey, transcribes it locally using OpenAI's Whisper model, and types the text into your active application.
+A local, privacy-focused voice dictation tool acting as a clone of "Wispr Flow". It records audio upon a global hotkey, transcribes it locally using OpenAI's Whisper model, and **pastes** the text into your active application instantly.
 
-## 🚀 Quick Start
+## 🚀 Features
 
-1.  **Prerequisites**:
-    *   Node.js installed.
-    *   Python 3 installed.
-    *   FFmpeg installed (`brew install ffmpeg` on macOS).
-    *   macOS (for `robotjs` accessibility permissions).
+-   **Privacy-First**: All audio processing happens locally on your machine.
+-   **Instant Typing**: Uses clipboard injection (`Cmd+V`) for fast text insertion.
+-   **Background App**: Runs invisibly in the background with no Dock icon.
+-   **Tray Control**: Managed via a menu bar icon.
+-   **Overlay UI**: Minimalist pulsing indicator that floats over all apps (including fullscreen).
 
-2.  **Installation & Run**:
+## 🛠 Prerequisites
+
+-   **macOS** (Required for Accessibility/AppleScript integration).
+-   **Node.js** installed.
+-   **Python 3** installed.
+-   **FFmpeg**: Required for audio processing (`brew install ffmpeg`).
+
+## ⚡️ Quick Start
+
+1.  **Installation**:
     ```bash
     ./install_and_run.sh
     ```
-    *   Note: On first run, it will download the Whisper model which may take a few moments.
-    *   **Permissions**: You will likely be prompted to grant **Accessibility** and **Microphone** permissions to Terminal/Electron. You **MUST** grant Accessibility for the typing simulation to work.
+    *   *Note*: The first run downloads the Whisper AI model (~150MB).
+    *   **Permissions**: You MUST grant **Accessibility** permissions to Terminal/Electron when prompted. This is required for the app to type/paste text.
+    *   **Microphone**: Grant microphone access when prompted.
 
-## 🎮 Usage
+2.  **Usage**:
+    -   **Trigger**: Press `Command + Shift + Space`.
+    -   **Dictate**: Speak clearly when you see the black pulsing circle.
+    -   **Finish**: Press `Command + Shift + Space` again.
+    -   **Result**: The text is automatically pasted into your active cursor position.
 
-1.  **Trigger**: Press `Command + Shift + Space`.
-2.  **Record**: You will see a black pulsing circle at the bottom of the screen. Speak clearly.
-3.  **Finish**: Press `Command + Shift + Space` again.
-4.  **Result**: The transcription will be typed at your current cursor position.
+3.  **Quit**: Click the microphone icon in the menu bar and select **Quit**.
 
-## 🏗 Architecturenpm
+## ⚙️ Auto-Start at Login
 
-### Frontend (Electron)
-*   **`main.js`**:
-    *   Creates a transparent, always-on-top frameless window.
-    *   Registers the global shortcut `Cmd+Shift+Space`.
-    *   Spawns the Python backend as a child process.
-    *   Communicates with Python via `stdio` (Standard Input/Output).
-    *   Uses `robotjs` to simulate keystrokes of the transcribed text.
-*   **`renderer.js`**: Handles the visual state of the circle (Idle -> Listening -> Processing).
+To have the app start automatically when you log in:
 
-### Backend (Python)
-*   **`transcribe.py`**:
-    *   Loads `openai-whisper` model (Base model).
-    *   Uses `sounddevice` to record audio from the default microphone.
-    *   Saves audio to a temporary WAV file.
-    *   Transcribes audio and prints `TRANSCRIPTION_COMPLETE: output` to stdout.
+1.  Run the setup script:
+    ```bash
+    ./setup_launchd.sh
+    ```
+2.  The app will now launch silently in the background on your next login.
 
-## ⚙️ Automatic Startup (macOS)
+## 🏗 Architecture
 
-To run this automatically at login:
+-   **Frontend (Electron)**: Handles the UI overlay, global shortcuts, and system tray. Communicates with Python via `stdio`.
+-   **Backend (Python)**:
+    -   Records audio using `sounddevice`.
+    -   Transcribes using `openai-whisper` (Base model).
+    -   Pastes text using `pyperclip` (clipboard) and `pyautogui` (keyboard simulation).
 
-1.  Open **System Settings** -> **General** -> **Login Items**.
-2.  Click the `+` button.
-3.  Navigate to this project folder and select `install_and_run.sh`.
+## 🔧 Troubleshooting
 
-## 🛡 Privacy
-
-All processing happens **locally** on your machine. No audio data is sent to the cloud.
-# macos-voice-transcription
+-   **"Python Status" Logs**: You might see logs in the terminal labeled "Python Status". These are normal progress indicators, not errors.
+-   **Not Typing**: Ensure you have granted **Accessibility** permissions to the app (System Settings -> Privacy & Security -> Accessibility).
+-   **Git Push Failures**: Since `venv` and `node_modules` are large, they are excluded from Git. If you added them previously, run `git rm -r --cached venv node_modules` before pushing.

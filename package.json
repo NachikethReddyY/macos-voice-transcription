@@ -1,0 +1,13 @@
+{
+  "name": "wispr-flow-clone",
+  "version": "1.0.0",
+  "description": "A local, privacy-focused voice dictation tool",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^34.0.0"
+  }
+}
