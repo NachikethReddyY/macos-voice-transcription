@@ -49,6 +49,8 @@ fi
 
 # 5. Run Application
 clear
+clear
+
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "  🚀 Starting Wispr Flow..."
 echo "  Indicator will appear in your Menu Bar (Microphone icon)"
