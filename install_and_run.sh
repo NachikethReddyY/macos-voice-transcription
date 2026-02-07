@@ -48,5 +48,10 @@ fi
 # 4. (Removed) Rebuild robotjs - No longer needed
 
 # 5. Run Application
-echo "▶️ Starting Wispr Flow..."
+clear
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  🚀 Starting Wispr Flow..."
+echo "  Indicator will appear in your Menu Bar (Microphone icon)"
+echo "  Shortcut: Command + Shift + Space"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 npm start

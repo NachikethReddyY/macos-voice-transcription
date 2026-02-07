@@ -33,7 +33,15 @@ A local, privacy-focused voice dictation tool acting as a clone of "Wispr Flow".
     -   **Finish**: Press `Command + Shift + Space` again.
     -   **Result**: The text is automatically pasted into your active cursor position.
 
-3.  **Quit**: Click the microphone icon in the menu bar and select **Quit**.
+### 🖥 Global Command (CLI)
+
+You can launch the app from any terminal by typing `wisper`.
+
+1.  **Setup**:
+    ```bash
+    sudo ln -s /Users/ynr/code/wisper/wisper_wrapper.sh /usr/local/bin/wisper
+    ```
+2.  **Usage**: Simply type `wisper` in any directory to start the app.
 
 ## ⚙️ Auto-Start at Login
 
@@ -44,6 +52,11 @@ To have the app start automatically when you log in:
     ./setup_launchd.sh
     ```
 2.  The app will now launch silently in the background on your next login.
+
+## 🛑 Stopping the App
+
+-   **Quit**: Click the microphone icon in the menu bar (Tray) and select **Quit**.
+-   **Manual Stop**: If running via terminal, press `Ctrl + C`.
 
 ## 🏗 Architecture
 
